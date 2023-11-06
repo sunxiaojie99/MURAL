@@ -1,0 +1,13 @@
+.idea/
+__pycache__/
+*.egg-info/
+downloads/*
+*.jsonl
+downloads/*
+output/*
+src/*.log
+build/*
+dist/*
+scripts/do_test/*.detail
+scripts/images/*
+scripts/board/*

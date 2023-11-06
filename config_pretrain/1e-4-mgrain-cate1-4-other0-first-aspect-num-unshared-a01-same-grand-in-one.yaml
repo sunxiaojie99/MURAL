@@ -1,0 +1,47 @@
+pretrain:
+  save_strategy: "epoch"
+  q_pool_type: "att"
+  doc_pool_type: "att"
+  pretrain_type: "mgrain"  # need ck , wholewordpreidct_shared_dynamic
+  multi_have_weight: 0  # 控制MultiLabelCircleLoss 是否label含weight
+  is_concat: "first-aspect-num"  # need ck, 如果拼接作为doc输入，改为yes
+  is_shared_mgrain: "no"  # 是否共享词表
+  ab_type: "same-gran-in-one#all"
+  prompt_type: "three-sep"
+  pre_layer_num: 11   # for prompt-apre, 使用哪层去做aspect pred
+  aspect_loss_type: "softmax-ignore"  # aspect loss 的类型: softmax or bce or softmax-ignore
+  cat_level: 4  # need ck, for prompt
+  mlm_probability: 0.15  # need ck, if not dp, should be none
+  aspect_mlm_prob: 1.0  # need ck
+  mask_aspect_num: 1  # 当aspect mlm prob 为1.0时生效，决定每条样本完整mask几个aspect
+  pretrain_aspect_alpha: 0.1  # for pretrain_type == 'mtbert' and 'madr'
+  amlm_loss_factor: 1.0
+  aspect_num: 4  # for madr, real_num+1, b+c1+i1+other; for mgrain, emb num
+  begin_id: 0
+  p_max_len: 156  # need ck
+  model_name_or_path: "/path/downloads/bert-base-uncased"
+  train_file: "/path/downloads/amazon_smaller_version/amazon_corpus_with_cate_clean.jsonl"
+  per_device_train_batch_size: 160
+  learning_rate: 1e-4
+  per_device_eval_batch_size: 8
+  num_train_epochs: 20
+
+common:
+  brand2id_path: "/path/downloads/amazon_ori/product_brand2id_13.json"
+  color2id_path: "/path/downloads/amazon_ori/product_color2id_7.json"
+  cate1_2id_path: "/path/downloads/craw/cate12id.json"
+  cate2_2id_path: "/path/downloads/craw/cate22id.json"
+  cate3_2id_path: "/path/downloads/craw/cate32id.json"
+  cate4_2id_path: "/path/downloads/craw/cate42id.json"
+  cate5_2id_path: "/path/downloads/craw/cate52id.json"
+  cate_word_vocab_file: "/path/downloads/craw/cate1-4_word_vocab.json"
+  whole_cate_vocab_file: "/path/downloads/craw/whole_cate1-4_vocab.json"
+  cate_wordpiece_vocab_file: "/path/downloads/craw/cate1-4_wordpiece_vocab.json"
+  brand_word_vocab_file: "/path/downloads/craw/brand_word_vocab.json"
+  whole_brand_vocab_file: "/path/downloads/amazon_ori/product_brand2id_13.json"
+  brand_wordpiece_vocab_file: "/path/downloads/craw/brand_wordpiece_vocab.json"
+  color_word_vocab_file: "/path/downloads/craw/color_word_vocab.json"
+  whole_color_vocab_file: "/path/downloads/amazon_ori/product_color2id_7.json"
+  color_wordpiece_vocab_file: "/path/downloads/craw/color_wordpiece_vocab.json"
+  dataset_proc_num: 2
+  

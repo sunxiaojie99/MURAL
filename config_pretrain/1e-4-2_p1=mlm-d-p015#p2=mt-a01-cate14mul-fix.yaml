@@ -1,0 +1,33 @@
+pretrain:
+  save_strategy: "epoch"
+  q_pool_type: "att"
+  doc_pool_type: "att"
+  pretrain_type: "mtbert"  # need ck
+  is_concat: "no"  # need ck, 如果拼接作为doc输入，改为yes
+  prompt_type: "three-sep"
+  pre_layer_num: 11   # for prompt-apre, 使用哪层去做aspect pred
+  aspect_loss_type: "softmax-ignore"  # aspect loss 的类型: softmax or softmax-ignore
+  cat_level: 4  # need ck, for prompt
+  mlm_probability: 0.15  # need ck, if not dp, should be none
+  aspect_mlm_prob: 0.6  # need ck
+  pretrain_aspect_alpha: 0.1  # for pretrain_type == 'mtbert' and 'madr'
+  # amlm_loss_factor: 1.0
+  aspect_num: 4  # for madr, real_num+1, b+c1+i1+other
+  p_max_len: 156  # need ck
+  model_name_or_path: "/path/downloads/bert-base-uncased"
+  train_file: "/path/downloads/amazon_smaller_version/amazon_corpus_with_cate_clean.jsonl"
+  per_device_train_batch_size: 160
+  learning_rate: 1e-4
+  per_device_eval_batch_size: 8
+  num_train_epochs: 20
+
+common:
+  brand2id_path: "/path/downloads/amazon_ori/product_brand2id_13.json"
+  color2id_path: "/path/downloads/amazon_ori/product_color2id_7.json"
+  cate1_2id_path: "/path/downloads/craw/cate12id.json"
+  cate2_2id_path: "/path/downloads/craw/cate22id.json"
+  cate3_2id_path: "/path/downloads/craw/cate32id.json"
+  cate4_2id_path: "/path/downloads/craw/cate42id.json"
+  cate5_2id_path: "/path/downloads/craw/cate52id.json"
+  dataset_proc_num: 2
+  

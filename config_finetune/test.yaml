@@ -1,0 +1,68 @@
+common:
+  dataset_name: "amazon"
+  model_type: "madr"  # need ck
+  prompt_type: "three-sep"
+  aspect_mlm_prob: 0.0  # need ck, for prompt
+  finetune_aspect_alpha: 0.0  # ck, 辅助loss系数
+  cat_level: 4  # need ck, for prompt
+  q_pool_type: "att"  # need ck
+  doc_pool_type: "att"  # need ck
+  is_concat: "no"  # need ck, 如果拼接作为doc输入，改为yes
+  is_concat_query: "no"
+  gating_type: "no"  # for madral
+  aspect_num: 4
+  begin_id: 0
+  aspect_loss_type: "softmax-ignore"  # aspect loss 的类型: softmax or bce or softmax-ignore
+  brand2id_path: "/path/downloads/amazon_ori/product_brand2id_13.json"
+  color2id_path: "/path/downloads/amazon_ori/product_color2id_7.json"
+  cate1_2id_path: "/path/downloads/craw/cate12id.json"
+  cate2_2id_path: "/path/downloads/craw/cate22id.json"
+  cate3_2id_path: "/path/downloads/craw/cate32id.json"
+  cate4_2id_path: "/path/downloads/craw/cate42id.json"
+  cate5_2id_path: "/path/downloads/craw/cate52id.json"
+  whole_cate_vocab_file: "/path/downloads/craw/whole_cate1-4_vocab.json"
+  cate_wordpiece_vocab_file: "/path/downloads/craw/cate1-4_wordpiece_vocab.json"
+  brand_word_vocab_file: "/path/downloads/craw/brand_word_vocab.json"
+  whole_brand_vocab_file: "/path/downloads/amazon_ori/product_brand2id_13.json"
+  brand_wordpiece_vocab_file: "/path/downloads/craw/brand_wordpiece_vocab.json"
+  color_word_vocab_file: "/path/downloads/craw/color_word_vocab.json"
+  whole_color_vocab_file: "/path/downloads/amazon_ori/product_color2id_7.json"
+  color_wordpiece_vocab_file: "/path/downloads/craw/color_wordpiece_vocab.json"
+  dataset_proc_num: 2
+
+finetune:
+  query_model_name_or_path: ""
+  doc_model_name_or_path: ""
+  model_name_or_path: "/path/downloads/bert-base-uncased"
+  tokenizer_name: "/path/downloads/bert-base-uncased"
+  config_name: "/path/downloads/bert-base-uncased"
+  train_dir: "/path/downloads/amazon_smaller_version/tokenize/train_qrel_detail.txt"
+  save_strategy: "no"
+  save_steps: 50
+  per_device_train_batch_size: 64
+  train_n_passages: 2
+  learning_rate: 5e-6
+  q_max_len: 32
+  p_max_len: 156
+  num_train_epochs: 20
+  logging_steps: 500
+  is_eval_aspect: "yes"
+
+encode_query:
+  output_dir: "temp"
+  tokenizer_name: "/path/downloads/bert-base-uncased"
+  config_name: "/path/downloads/bert-base-uncased"
+  per_device_eval_batch_size: 156
+  encode_in_path: "/path/downloads/amazon_smaller_version/tokenize/test_qrel_detail.txt"
+  q_max_len: 32
+  is_eval_aspect: "yes"
+
+encode_doc:
+  output_dir: "temp"
+  tokenizer_name: "/path/downloads/bert-base-uncased"
+  config_name: "/path/downloads/bert-base-uncased"
+  per_device_eval_batch_size: 1280
+  p_max_len: 156
+  encode_in_path: "/path/downloads/amazon_smaller_version/tokenize/amazon_corpus_with_cate_clean.jsonl"
+  is_eval_aspect: "yes"
+  
