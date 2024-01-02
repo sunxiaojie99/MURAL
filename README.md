@@ -8,7 +8,7 @@ This repo contains the source code of our paper in WSDM 2024: A Multi-Granularit
 
 ## Paper released
 
-hold on
+Please refer to our paper for details: [paper](https://arxiv.org/abs/2312.02538)
 
 ## Dataset released
 
